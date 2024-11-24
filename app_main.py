@@ -6,7 +6,7 @@ from pygame import mixer
 import random
 
 # Initialize pygame mixer for audio playback
-mixer.init()
+#mixer.init()
 
 
 # Load images and cache them using st.cache_data
@@ -43,18 +43,20 @@ if "show_heart" not in st.session_state:
 
 # Function to play audio
 def play_audio():
-    mixer.music.load("wait_audio.mp3")  # Load your MP3 file
-    mixer.music.play(-1)  # Play in a loop
+    st.audio("wait_audio.mp3",autoplay=True)
+    #mixer.music.load("wait_audio.mp3")  # Load your MP3 file
+    #mixer.music.play(-1)  # Play in a loop
 
 # Function to stop audio
 def stop_audio():
-    mixer.music.stop()
+    st.audio("wait_audio.mp3",autoplay=False)
 
 # Handle START button
 if start_button:
     st.session_state.is_running = True
     st.session_state.show_heart = False
-    threading.Thread(target=play_audio).start()  # Start playing audio in a separate thread
+    play_audio()
+    #threading.Thread(target=play_audio).start()  # Start playing audio in a separate thread
 
 # Handle STOP button
 if stop_button:
