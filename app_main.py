@@ -55,7 +55,7 @@ def stop_audio():
 if start_button:
     st.session_state.is_running = True
     st.session_state.show_heart = False
-    #play_audio()
+    play_audio()
     #threading.Thread(target=play_audio).start()  # Start playing audio in a separate thread
 
 # Handle STOP button
@@ -65,6 +65,7 @@ if stop_button:
     #stop_audio()  # Stop audio playback
     placeholder.empty()  # Clear the placeholder
     input_placeholder.empty()  # Clear the input field
+    stop_audio()
 
 # Animation loop
 while st.session_state.is_running:
@@ -86,6 +87,7 @@ while st.session_state.is_running:
         #stop_audio()  # Stop audio playback
         placeholder.empty()
         input_placeholder.empty()
+        stop_audio()
         break
 
     while time.time() - start_time < 10:  # Loop for 10 seconds
@@ -132,6 +134,7 @@ while st.session_state.is_running:
     if not st.session_state.is_running:
         placeholder.empty()
         #stop_audio()
+        stop_audio()
         break
 
 
