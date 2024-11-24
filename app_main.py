@@ -62,81 +62,79 @@ if start_button:
 if stop_button:
     st.session_state.is_running = False
     st.session_state.show_heart = False
-    #stop_audio()  # Stop audio playback
     placeholder.empty()  # Clear the placeholder
     input_placeholder.empty()  # Clear the input field
     stop_audio()
-
-# Animation loop
-while st.session_state.is_running:
-    start_time = time.time()
-
-
-    # Generate a random integer
-    random_int = random.randint(1, 100)
-    k = f"input{random_int}"
+try: 
+    # Animation loop
+    while st.session_state.is_running:
+        start_time = time.time()
 
 
-    # Show the text input for "amorcito" name
-    amorcito_name = input_placeholder.text_input("¿Quién es mi amorcito?", key="k")
+        # Generate a random integer
+        random_int = random.randint(1, 100)
+        k = f"input{random_int}"
 
-    # Check for specific names
-    if any(name in amorcito_name.lower() for name in ["bri", "brigith", "vanessa","brigith vanessa","yo"]):
-        st.session_state.is_running = False
-        st.session_state.show_heart = True
-        #stop_audio()  # Stop audio playback
-        placeholder.empty()
-        input_placeholder.empty()
-        stop_audio()
-        break
 
-    while time.time() - start_time < 10:  # Loop for 10 seconds
-        elapsed_time = time.time() - start_time
+        # Show the text input for "amorcito" name
+        amorcito_name = input_placeholder.text_input("¿Quién es mi amorcito?", key="k")
 
-        if elapsed_time < 1.3:  # Show hand pose for 1.30 seconds
-            placeholder.image(hand_pose)
-
-        elif elapsed_time < 3.6:  # Show loop pattern for 2.30 seconds
-            # Faster transitions: 0.1 seconds per frame
-            pattern_time = (elapsed_time - 1.3) % 0.3
-            if pattern_time < 0.1:
-                placeholder.image(wait1)
-            elif pattern_time < 0.2:
-                placeholder.image(wait0)
-            else:
-                placeholder.image(wait2)
-
-        elif elapsed_time < 4.9:  # Show hand pose for another 1.30 seconds
-            placeholder.image(hand_pose)
-
-        elif elapsed_time < 7.2:  # Repeat the loop for 2.30 seconds
-            # Faster transitions: 0.1 seconds per frame
-            pattern_time = (elapsed_time - 4.9) % 0.3
-            if pattern_time < 0.1:
-                placeholder.image(wait1)
-            elif pattern_time < 0.2:
-                placeholder.image(wait0)
-            else:
-                placeholder.image(wait2)
-
-        else:  # End with hand pose
-            placeholder.image(hand_pose)
-            time.sleep(1.3)  # Hold for 1.30 seconds
+        # Check for specific names
+        if any(name in amorcito_name.lower() for name in ["bri", "brigith", "vanessa","brigith vanessa","yo"]):
+            st.session_state.is_running = False
+            st.session_state.show_heart = True
+            placeholder.empty()
+            input_placeholder.empty()
+            stop_audio()
             break
 
-        time.sleep(0.1)  # Small delay for smooth updates
+        while time.time() - start_time < 10:  # Loop for 10 seconds
+            elapsed_time = time.time() - start_time
 
-        # Check if STOP button is pressed during animation
+            if elapsed_time < 1.3:  # Show hand pose for 1.30 seconds
+                placeholder.image(hand_pose)
+
+            elif elapsed_time < 3.6:  # Show loop pattern for 2.30 seconds
+                # Faster transitions: 0.1 seconds per frame
+                pattern_time = (elapsed_time - 1.3) % 0.3
+                if pattern_time < 0.1:
+                    placeholder.image(wait1)
+                elif pattern_time < 0.2:
+                    placeholder.image(wait0)
+                else:
+                    placeholder.image(wait2)
+
+            elif elapsed_time < 4.9:  # Show hand pose for another 1.30 seconds
+                placeholder.image(hand_pose)
+
+            elif elapsed_time < 7.2:  # Repeat the loop for 2.30 seconds
+                # Faster transitions: 0.1 seconds per frame
+                pattern_time = (elapsed_time - 4.9) % 0.3
+                if pattern_time < 0.1:
+                    placeholder.image(wait1)
+                elif pattern_time < 0.2:
+                    placeholder.image(wait0)
+                else:
+                    placeholder.image(wait2)
+
+            else:  # End with hand pose
+                placeholder.image(hand_pose)
+                time.sleep(1.3)  # Hold for 1.30 seconds
+                break
+
+            time.sleep(0.1)  # Small delay for smooth updates
+
+            # Check if STOP button is pressed during animation
+            if not st.session_state.is_running:
+                break
+
+        # If STOP is pressed, clear the animation
         if not st.session_state.is_running:
+            placeholder.empty()
+            stop_audio()
             break
-
-    # If STOP is pressed, clear the animation
-    if not st.session_state.is_running:
-        placeholder.empty()
-        #stop_audio()
-        stop_audio()
-        break
-
+except Exception:
+    pass
 
 # Display the heart and message if the condition is met
 if st.session_state.show_heart:
