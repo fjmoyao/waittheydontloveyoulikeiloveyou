@@ -5,8 +5,7 @@ import threading
 from pygame import mixer
 import random
 
-# Initialize pygame mixer for audio playback
-#mixer.init()
+st.set_page_config( page_title="Wait Bri! They don't love U like i Love U",initial_sidebar_state="expanded" )
 
 
 # Load images and cache them using st.cache_data
